@@ -32,4 +32,9 @@ public class Fraction
     {
         return (double)_top / _bottom;
     }
+
+    internal void SetBottom(int v)
+    {
+        throw new NotImplementedException();
+    }
 }
