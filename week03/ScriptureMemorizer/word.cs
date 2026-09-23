@@ -33,7 +33,7 @@ public class Word
         // while keeping punctuation such as commas and periods.
         return string.Concat(
             _text.Select(character =>
-                char.IsLetterOrDigit(character) ? '_' : character.ToString())
+                char.IsLetterOrDigit(character) ? "_" : character.ToString())
         );
     }
 }
