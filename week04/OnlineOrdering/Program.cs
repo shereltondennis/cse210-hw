@@ -5,148 +5,30 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Online Ordering Program");
-        Console.WriteLine("======================");
+        Address address1 = new Address("123 Main Street, Sinker", "Montserrado county", "Monrovia Liberia", "84606");
+        Customer customer1 = new Customer("Sinker 12 street", address1);
+        Order order1 = new Order(customer1);
+        order1.AddProduct(new Product("Keyboard", 89.99m, 1));
+        order1.AddProduct(new Product("Mouse", 24.50m, 2));
+        order1.AddProduct(new Product("Monitor", 199.99m, 1));
 
-        Address shippingAddress = new Address("123 Main Street", "Provo", "UT", "84606");
-        Customer customer = new Customer("Ava Anderson", shippingAddress);
+        Address address2 = new Address("Center Street", "Center Monrovia", "ID", "83440");
+        Customer customer2 = new Customer("Eli Johnson", address2);
+        Order order2 = new Order(customer2);
+        order2.AddProduct(new Product("Laptop Stand", 39.99m, 1));
+        order2.AddProduct(new Product("USB Hub", 34.50m, 2));
 
-        Order order = new Order(customer);
-        order.AddProduct(new Product("Mechanical Keyboard", "Wireless keyboard with blue switches", 89.99m), 1);
-        order.AddProduct(new Product("USB-C Hub", "7-port hub for laptops", 34.50m), 2);
-        order.AddProduct(new Product("Laptop Stand", "Aluminum adjustable stand", 49.00m), 1);
+        List<Order> orders = new List<Order> { order1, order2 };
 
-        order.DisplaySummary();
-    }
-}
-
-class Address
-{
-    private string street;
-    private string city;
-    private string state;
-    private string zipCode;
-
-    public Address(string street, string city, string state, string zipCode)
-    {
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-    }
-
-    public string GetFormattedAddress()
-    {
-        return $"{street}, {city}, {state} {zipCode}";
-    }
-}
-
-class Customer
-{
-    private string name;
-    private Address address;
-
-    public Customer(string name, Address address)
-    {
-        this.name = name;
-        this.address = address;
-    }
-
-    public string Name
-    {
-        get { return name; }
-    }
-
-    public Address Address
-    {
-        get { return address; }
-    }
-}
-
-class Product
-{
-    private string name;
-    private string description;
-    private decimal price;
-    private int quantity;
-
-    public Product(string name, string description, decimal price)
-    {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.quantity = 1;
-    }
-
-    public string Name
-    {
-        get { return name; }
-    }
-
-    public string Description
-    {
-        get { return description; }
-    }
-
-    public decimal Price
-    {
-        get { return price; }
-    }
-
-    public int Quantity
-    {
-        get { return quantity; }
-        set { quantity = value; }
-    }
-
-    public decimal GetTotalPrice()
-    {
-        return price * quantity;
-    }
-}
-
-class Order
-{
-    private Customer customer;
-    private List<Product> products;
-
-    public Order(Customer customer)
-    {
-        this.customer = customer;
-        products = new List<Product>();
-    }
-
-    public void AddProduct(Product product, int quantity)
-    {
-        product.Quantity = quantity;
-        products.Add(product);
-    }
-
-    public decimal GetTotalCost()
-    {
-        decimal total = 0m;
-
-        foreach (Product product in products)
+        foreach (Order order in orders)
         {
-            total += product.GetTotalPrice();
+            Console.WriteLine(order.GetPackingLabel());
+            Console.WriteLine();
+            Console.WriteLine(order.GetShippingLabel());
+            Console.WriteLine();
+            Console.WriteLine($"Total Cost: ${order.GetTotalCost():F2}");
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine();
         }
-
-        return total;
-    }
-
-    public void DisplaySummary()
-    {
-        Console.WriteLine($"Customer: {customer.Name}");
-        Console.WriteLine($"Shipping to: {customer.Address.GetFormattedAddress()}");
-        Console.WriteLine();
-        Console.WriteLine("Items:");
-
-        foreach (Product product in products)
-        {
-            Console.WriteLine($"- {product.Quantity} x {product.Name} (${product.Price:F2} each) = ${product.GetTotalPrice():F2}");
-        }
-
-        Console.WriteLine();
-        Console.WriteLine($"Total: ${GetTotalCost():F2}");
     }
 }
