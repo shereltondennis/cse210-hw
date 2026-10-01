@@ -19,6 +19,11 @@ public class Fraction
 
     public Fraction(int top, int bottom)
     {
+        if (bottom == 0)
+        {
+            throw new ArgumentException("Denominator cannot be zero.");
+        }
+
         _top = top;
         _bottom = bottom;
     }
@@ -33,8 +38,28 @@ public class Fraction
         return (double)_top / _bottom;
     }
 
-    internal void SetBottom(int v)
+    public void SetTop(int top)
     {
-        throw new NotImplementedException();
+        _top = top;
+    }
+
+    public int GetTop()
+    {
+        return _top;
+    }
+
+    public void SetBottom(int bottom)
+    {
+        if (bottom == 0)
+        {
+            throw new ArgumentException("Denominator cannot be zero.");
+        }
+
+        _bottom = bottom;
+    }
+
+    public int GetBottom()
+    {
+        return _bottom;
     }
 }
