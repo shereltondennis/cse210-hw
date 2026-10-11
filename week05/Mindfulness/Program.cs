@@ -8,7 +8,6 @@ class Program
 
         while (running)
         {
-            Console.Clear();
             Console.WriteLine("Menu Options:");
             Console.WriteLine("  1. Start breathing activity");
             Console.WriteLine("  2. Start reflecting activity");
@@ -16,7 +15,15 @@ class Program
             Console.WriteLine("  4. Quit");
             Console.Write("Select a choice from the menu: ");
 
-            switch (Console.ReadLine())
+            string choice = Console.ReadLine();
+            if (choice == null)
+            {
+                Console.WriteLine();
+                Console.WriteLine("No interactive input is available. Run this program in a terminal and enter a menu number.");
+                break;
+            }
+
+            switch (choice)
             {
                 case "1": new BreathingActivity().Run(); break;
                 case "2": new ReflectionActivity().Run(); break;
